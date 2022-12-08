@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+int inverse(int k){
+    for(int i=0;i<26;i++){
+        int flag=(i*k)%26;
+        if(flag==1)
+            return i;
+    }
+    return -1;
+    
+}
+
+int main() {
+	string s;
+	cin>>s;
+	int choice,key;
+	cin>>choice>>key;
+	//encryption
+	if(choice==1){
+	    for(int i=0;i<s.length();i++){
+	        char text=s[i];
+	        if(s[i]>='a' && s[i]<='z'){
+	            text=char(((int(s[i]-97))*key)%26+97);
+	        }
+	            
+	        if(s[i]>='A' && s[i]<='Z'){
+	            text=char(((int(s[i]-65))*key)%26+65);
+	        }
+	        s[i]=text;
+	    }
+	}
+	else if(choice==2){
+	    for(int i=0;i<s.length();i++){
+	        char text;
+	        if(s[i]>='a' && s[i]<='z'){
+	            text=char(((int(s[i]-97))*inverse(key))%26+97);
+	        }
+	            
+	        if(s[i]>='A' && s[i]<='Z'){
+	            text=char(((int(s[i]-65))*inverse(key))%26+65);
+	        }
+	        s[i]=text;
+	    }
+	}
+	cout<<s;
+	return 0;
+}
