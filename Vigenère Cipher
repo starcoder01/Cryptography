@@ -1,0 +1,49 @@
+#include <bits/stdc++.h > using namespace std;
+
+string getEffectiveKey(string msg, string key)
+{
+	int msgLen = msg.length();
+	int keyLen = key.length();
+	string effectiveKey = "";
+	for (int i = 0; i < msgLen / keyLen; i++) effectiveKey += key;
+	effectiveKey += key.substr(0, msgLen - effectiveKey.length());
+	return effectiveKey;
+}
+
+string encrypt(string msg, string key)
+{
+	int msgLen = msg.length();
+	string encryptedMsg = "";
+	for (int i = 0; i < msgLen; i++) encryptedMsg += (((msg[i] - 'a') + (key[i] - 'a')) % 26) + 'a';
+	return encryptedMsg;
+}
+
+string decrypt(string encryptedMsg, string key)
+{
+	int encryptedMsgLen = encryptedMsg.length();
+	string decryptedMsg = "";
+	for (int i = 0; i < encryptedMsgLen; i++)
+	{
+		int temp = (encryptedMsg[i] - 'a') - (key[i] - 'a');
+		if (temp < 0) decryptedMsg += 'z' + temp;
+		else decryptedMsg += temp + 'a';
+	}
+
+	return decryptedMsg;
+}
+
+int main()
+{
+	cout << "Enter Message: ";
+	string msg;
+	cin >> msg;
+	cout << "Enter Key: ";
+	string key;
+	cin >> key;
+	string effectiveKey = getEffectiveKey(msg, key);
+	string encryptedMsg = encrypt(msg, effectiveKey);
+	cout << "Encrypted Message: " << encryptedMsg << "\n";
+	string decryptedMsg = decrypt(encryptedMsg, effectiveKey);
+	cout << "Decrypted Message: " << decryptedMsg << "\n";
+	return 0;
+}
